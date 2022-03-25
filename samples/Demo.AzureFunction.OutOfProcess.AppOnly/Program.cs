@@ -7,7 +7,7 @@ using System;
 using System.Linq;
 using System.Security.Cryptography.X509Certificates;
 
-namespace ProvisioningDemo
+namespace MIOnline
 {
     public class Program
     {
@@ -35,10 +35,12 @@ namespace ProvisioningDemo
                     services.AddPnPCore(options =>
                     {
                         // Add the base site url
-                        options.Sites.Add("Default", new PnPCoreSiteOptions
+                        options.Sites.Add("MIOnline", new PnPCoreSiteOptions
                         {
-                            SiteUrl = azureFunctionSettings.SiteUrl
+                            SiteUrl = "https://tkgappdev.sharepoint.com/sites/MIOnline"
+                            //SiteUrl = azureFunctionSettings.SiteUrl
                         });
+
                     });
 
                     services.AddPnPCoreAuthentication(options =>
@@ -58,7 +60,7 @@ namespace ProvisioningDemo
                         });
 
                         // Connect this auth method to the configured site
-                        options.Sites.Add("Default", new PnPCoreAuthenticationSiteOptions
+                        options.Sites.Add("MIOnline", new PnPCoreAuthenticationSiteOptions
                         {
                             AuthenticationProviderName = "CertAuth",
                         });
@@ -68,6 +70,7 @@ namespace ProvisioningDemo
                 .Build();
 
             host.Run();
+
         }
 
         private static X509Certificate2 LoadCertificate(AzureFunctionSettings azureFunctionSettings)
